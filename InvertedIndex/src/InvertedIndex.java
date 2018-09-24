@@ -1,10 +1,8 @@
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
-import org.apache.hadoop.mapreduce.lib.reduce.IntSumReducer;
 
 public class InvertedIndex {
 
@@ -21,7 +19,7 @@ public class InvertedIndex {
     /*
      * Instantiate a Job object for your job's configuration. 
      */
-    Job job = new Job();
+    Job job = Job.getInstance();
     
     job.setJarByClass(InvertedIndex.class);
     job.setJobName("Inverted index");

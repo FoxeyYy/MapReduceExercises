@@ -21,7 +21,7 @@ public class FirstCharCount {
     /*
      * Instantiate a Job object for your job's configuration. 
      */
-    Job job = new Job();
+    Job job = Job.getInstance();
     
     job.setJarByClass(FirstCharCount.class);
     job.setJobName("First char count");
