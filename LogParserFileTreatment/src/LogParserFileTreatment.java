@@ -19,10 +19,10 @@ public class LogParserFileTreatment {
       System.exit(-1);
     }
     
-    Job job = new Job();
+    Job job = Job.getInstance();
     
     job.setJarByClass(LogParserFileTreatment.class);
-    job.setJobName("LogParser");
+    job.setJobName("LogParserFileTreatment");
 
     FileInputFormat.addInputPath(job, new Path(args[0]));
     FileOutputFormat.setOutputPath(job, new Path(args[1]));

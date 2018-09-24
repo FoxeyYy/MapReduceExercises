@@ -7,7 +7,7 @@ import org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.reduce.IntSumReducer;
 
-public class LogParserCount {
+public class LogParserCountHours {
 
   public static void main(String[] args) throws Exception {
 
@@ -15,14 +15,14 @@ public class LogParserCount {
      * Validate that two arguments were passed from the command line.
      */
     if (args.length != 2) {
-      System.out.println("Usage: LogParserCount <input dir> <output dir>");
+      System.out.println("Usage: LogParserCountHours <input dir> <output dir>");
       System.exit(-1);
     }
     
     Job job = Job.getInstance();
     
-    job.setJarByClass(LogParserCount.class);
-    job.setJobName("LogParserCount");
+    job.setJarByClass(LogParserCountHours.class);
+    job.setJobName("LogParserCount per Hours");
 
     FileInputFormat.addInputPath(job, new Path(args[0]));
     job.setInputFormatClass(SequenceFileInputFormat.class);
