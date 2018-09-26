@@ -5,6 +5,7 @@ import org.apache.hadoop.io.FloatWritable;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.MultipleInputs;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
@@ -42,7 +43,7 @@ public class BakeryCustomersTotalBill {
     job2.setJarByClass(BakeryCustomersTotalBill.class);
     job2.setJobName("Join on Receipts & Prices");
 
-    MultipleInputs.addInputPath(job2, new Path("./aux1/"), TextInputFormat.class,BakeryCustomersTotalBillPricesMapper.class);
+    MultipleInputs.addInputPath(job2, new Path("./aux1/"), KeyValueTextInputFormat.class, BakeryCustomersTotalBillPricesMapper.class);
     MultipleInputs.addInputPath(job2, new Path(args[0] + "/receipts.csv"), TextInputFormat.class, BakeryCustomersTotalBillReceiptMapper.class);
     FileOutputFormat.setOutputPath(job2, new Path("./aux2"));
         
@@ -61,7 +62,7 @@ public class BakeryCustomersTotalBill {
     job3.setJarByClass(BakeryCustomersTotalBill.class);
     job3.setJobName("Final join for customers and bills");
 
-    MultipleInputs.addInputPath(job3, new Path("./aux2/"), TextInputFormat.class,BakeryCustomersTotalBillTotalBillPerReceiptMapper.class);
+    MultipleInputs.addInputPath(job3, new Path("./aux2/"), KeyValueTextInputFormat.class, BakeryCustomersTotalBillTotalBillPerReceiptMapper.class);
     MultipleInputs.addInputPath(job3, new Path(args[0] + "/customers.csv"), TextInputFormat.class, BakeryCustomersTotalBillCustomerMapper.class);
     FileOutputFormat.setOutputPath(job3, new Path(args[1]));
         
