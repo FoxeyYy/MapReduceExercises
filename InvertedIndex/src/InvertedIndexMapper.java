@@ -8,15 +8,14 @@ import org.apache.hadoop.mapreduce.lib.input.FileSplit;
 
 public class InvertedIndexMapper extends Mapper<LongWritable, Text, Text, Text> {
 	
-	Text fileName;
+	String fileName;
 
 	@Override
 	protected void setup(Mapper<LongWritable, Text, Text, Text>.Context context)
 			throws IOException, InterruptedException {
 		super.setup(context);
 		
-		String file = ((FileSplit) context.getInputSplit()).getPath().getName();
-		fileName = new Text(file);
+		fileName = ((FileSplit) context.getInputSplit()).getPath().getName();
 	}
 
 	@Override
@@ -35,7 +34,7 @@ public class InvertedIndexMapper extends Mapper<LongWritable, Text, Text, Text> 
 			}
 			
 			Text word = new Text(token);
-			context.write(word, fileName);
+			context.write(word, new Text(fileName+":"+1));
 			
 		}
 

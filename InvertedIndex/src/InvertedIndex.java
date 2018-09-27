@@ -28,6 +28,7 @@ public class InvertedIndex {
     FileOutputFormat.setOutputPath(job, new Path(args[1]));
     
     job.setMapperClass(InvertedIndexMapper.class);
+    job.setCombinerClass(InvertedIndexReducer.class);
     job.setReducerClass(InvertedIndexReducer.class);
     
     job.setOutputKeyClass(Text.class);
