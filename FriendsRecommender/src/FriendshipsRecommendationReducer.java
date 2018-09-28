@@ -31,7 +31,7 @@ public class FriendshipsRecommendationReducer extends Reducer<IntWritable, Text,
 			}
 			
 			Friend friend = maxHeap.poll();
-			outputBuilder.append(friend.getId() + ":" + friend.getFriendshipsCount() +  ", ");
+			outputBuilder.append(friend.getId() +  ", ");
 			count++;
 		}
 		
