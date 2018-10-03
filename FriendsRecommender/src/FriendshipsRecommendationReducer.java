@@ -5,21 +5,18 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
-public class FriendshipsRecommendationReducer extends Reducer<IntWritable, Text, IntWritable, Text> {
+public class FriendshipsRecommendationReducer extends Reducer<IntWritable, Friend, IntWritable, Text> {
 	
 	private static final int MAX_SUGGESTIONS = 10;
 
 	@Override
-	public void reduce(IntWritable key, Iterable<Text> values, Context context)
+	public void reduce(IntWritable key, Iterable<Friend> values, Context context)
 			throws IOException, InterruptedException {
 
 		PriorityQueue<Friend> maxHeap = new PriorityQueue<>(MAX_SUGGESTIONS, new Friend.FriendComparator());
 
-		for (Text val: values) {
-			String[] parts = val.toString().split(",");
-			Friend friend = new Friend(Integer.valueOf(parts[0]), Integer.valueOf(parts[1]));
-			
-			maxHeap.add(friend);
+		for (Friend val: values) {
+			maxHeap.add(new Friend(val));
 		}
 
 		int count = 0;

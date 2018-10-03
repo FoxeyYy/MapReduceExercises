@@ -7,7 +7,7 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-public class FriendshipsCountMapper extends Mapper<Text, Text, Text, IntWritable> {
+public class FriendshipsCountMapper extends Mapper<Text, Text, FriendsKey, IntWritable> {
 	
 	@Override
 	public void map(Text key, Text value, Context context)
@@ -19,14 +19,21 @@ public class FriendshipsCountMapper extends Mapper<Text, Text, Text, IntWritable
 		while (friendsItr.hasMoreTokens()) {
 			int friend = Integer.valueOf(friendsItr.nextToken());
 			friendsList.add(friend);
-			context.write(new Text(key + "," + friend), new IntWritable(0));
+			FriendsKey friendkey = new FriendsKey(Integer.valueOf(key.toString()), friend);
+			context.write(friendkey, new IntWritable(0));
 		}
 		
-		for (int friend: friendsList) {
-			for (int friend2: friendsList) {
-				if (friend != friend2) {
-					context.write(new Text(friend + "," + friend2), new IntWritable(1));
+		for (int i = 0; i < friendsList.size(); i++) {
+			int friend = friendsList.get(i);
+			for (int j = i + 1; j < friendsList.size(); j++) {
+				int friend2 = friendsList.get(j);
+				FriendsKey friendkey;
+				if (friend < friend2) {
+					friendkey = new FriendsKey(friend, friend2);
+				} else {
+					friendkey = new FriendsKey(friend2, friend);
 				}
+				context.write(friendkey, new IntWritable(1));
 			}
 		}
 		

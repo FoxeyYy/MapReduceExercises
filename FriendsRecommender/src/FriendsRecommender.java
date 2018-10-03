@@ -33,6 +33,7 @@ public class FriendsRecommender {
     job1.setMapperClass(FriendshipsCountMapper.class);
     job1.setReducerClass(FriendshipsCounterReducer.class);
     
+    job1.setMapOutputKeyClass(FriendsKey.class);
     job1.setMapOutputValueClass(IntWritable.class);
     job1.setOutputKeyClass(Text.class);
     job1.setOutputValueClass(Text.class);
@@ -53,7 +54,8 @@ public class FriendsRecommender {
     job2.setReducerClass(FriendshipsRecommendationReducer.class);
     
     job2.setMapOutputKeyClass(IntWritable.class);
-    job2.setOutputKeyClass(Text.class);
+    job2.setMapOutputValueClass(Friend.class);
+    job2.setOutputKeyClass(IntWritable.class);
     job2.setOutputValueClass(Text.class);
     
     boolean success = job2.waitForCompletion(true);
